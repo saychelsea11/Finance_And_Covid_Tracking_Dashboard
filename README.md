@@ -2,5 +2,5 @@
 
 What we have so far!
 
-![image](https://user-images.githubusercontent.com/31114603/109235999-c514a480-779c-11eb-9686-e3730eab58d8.png)
+![image](https://user-images.githubusercontent.com/31114603/109240072-ccd84700-77a4-11eb-90f6-4f9bd3d8e7ec.png)
 
