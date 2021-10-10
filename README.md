@@ -2,7 +2,7 @@
 
 What we have so far!
 
-![image](https://user-images.githubusercontent.com/31114603/109729487-ee12ac00-7b85-11eb-86d8-1647dfce9bfe.png)
+![image](https://user-images.githubusercontent.com/31114603/136711861-e68f7bb0-1609-4c75-a927-3a67769f66ab.png)
 
 ### Code modifications: 
 - **Yahoo Finance Indexes (3/13/21)**: In the code, "bs.find("script",text=re.compile("root.App.main")).text" seemed to return an empty string for some users which could be an issue with the Python or BeautifulSoup version. A fix for this was to use the *str()* function instead of *.text*.
