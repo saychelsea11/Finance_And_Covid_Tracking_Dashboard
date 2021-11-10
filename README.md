@@ -16,5 +16,6 @@ What we have so far!
 **11/10/21**
 - **Changed source for major indexes**: Now retrieving major indexes information using the Yahoo Finance API which is increasing compute time by a few seconds. No longer scraping the information from a web source. 
 - **Added *Gold* and *Bitcoin* assets**: Added Gold and Bitcoin metrics part of the *Indexes and Assets* plot. These metrics are also being extracted using the Yahoo Finance API. 
-- **Changed source for interest rates**: Now retrieving long-term and short-term interest rates from *Treasury.gov* which is an official source instead of *Ycharts*. Interest rates plot x-axis now covers the current month. 
+- **Changed source for interest rates**: Now retrieving long-term and short-term interest rates from *Treasury.gov* which is an official source instead of *Ycharts*. 
+- **Monthly data for interest rates**: Interest rates plot x-axis now covers the current month. 
 
