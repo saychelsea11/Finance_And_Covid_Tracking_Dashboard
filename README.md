@@ -13,3 +13,8 @@ What we have so far!
 - **Added new metrics**: Added *Shiller PE*, *Buffet indicator* and *FINRA debt margin* metrics to the dashboard as new measures of market valuation. 
 - **Dashboard redesign**: Reduced the *VIX volatility indicator* data to only keep the current VIX value. This data was combined with the 3 new metrics and displayed as part of the same chart on the bottom-left. 
 
+**11/10/21**
+- **Changed source for major indexes**: Now retrieving major indexes information using the Yahoo Finance API which is increasing compute time by a few seconds. No longer scraping the information from a web source. 
+- **Added *Gold* and *Bitcoin* assets**: Added Gold and Bitcoin metrics part of the *Indexes and Assets* plot. These metrics are also being extracted using the Yahoo Finance API. 
+- **Changed source for interest rates**: Now retrieving long-term and short-term interest rates from *Treasury.gov* which is an official source instead of *Ycharts*. Interest rates plot x-axis now covers the current month. 
+
