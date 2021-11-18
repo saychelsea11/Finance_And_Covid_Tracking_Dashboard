@@ -2,7 +2,7 @@
 
 ### Streamlit App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/https://share.streamlit.io/saychelsea11/finance_and_covid_tracking_dashboard/main/Dashboard_With_Streamlit_App/Finance_tracking_streamlit.py)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/saychelsea11/finance_and_covid_tracking_dashboard/main/Dashboard_With_Streamlit_App/Finance_tracking_streamlit.py)
 
 ### What we have so far!
 
