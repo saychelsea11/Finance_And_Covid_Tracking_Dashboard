@@ -19,3 +19,6 @@ What we have so far!
 - **Changed source for interest rates**: Now retrieving long-term and short-term interest rates from *Treasury.gov* which is an official source instead of *Ycharts*. 
 - **Monthly data for interest rates**: Interest rates plot x-axis now covers the current month. 
 
+**11/18/21**
+- **Added Streamlit functionality**: Created Python scripts to generate the dashboard using Streamlit. The dashboard can now be viewed on a browser as an App. The code is located in the *Dashboard_With_Streamlit_App* folder. The *requirements.txt* file is also included there. 
+
