@@ -22,3 +22,6 @@ What we have so far!
 **11/18/21**
 - **Added Streamlit functionality**: Created Python scripts to generate the dashboard using Streamlit. The dashboard can now be viewed on a browser as an App. The code is located in the *Dashboard_With_Streamlit_App* folder. The *requirements.txt* file is also included there. 
 
+**12/21/21**
+- **Updated code for parsing vaccination data**: Modified text indicators for vaccination statistics as they had changed on the source website. 
+
