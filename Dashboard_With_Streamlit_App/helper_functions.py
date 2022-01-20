@@ -9,6 +9,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from datetime import date, datetime
+import json
   
 def extract_treasury_rates(url):
     req = requests.get(url)
@@ -127,7 +128,7 @@ def dash_create(df_unemp_rate,df_gdp,df_inflation,df_rates,yield_curve,vix,index
   plt.ylabel('Rate (%)',size=25)
   plt.xlabel('Treasury Security',size=25)
   
-  vix_data = {"MarketPrice":vix.info['regularMarketPrice'],"PreviousClose":vix.info['regularMarketPreviousClose'],"MarketOpen":vix.info['regularMarketOpen'],"DayHigh":vix.info['dayHigh'],"DayLow":vix.info['dayLow']}
+  #vix_data = {"MarketPrice":vix.info['regularMarketPrice'],"PreviousClose":vix.info['regularMarketPreviousClose'],"MarketOpen":vix.info['regularMarketOpen'],"DayHigh":vix.info['dayHigh'],"DayLow":vix.info['dayLow']}
   f3_ax4 = fig3.add_subplot(gs[0:10,2])  
   plots = sns.barplot(y="Change Percent", x="Index", data=indexes,alpha=0.8) 
     
@@ -172,16 +173,16 @@ def dash_create(df_unemp_rate,df_gdp,df_inflation,df_rates,yield_curve,vix,index
   plt.xticks(size=20, rotation=15)
   plt.yticks(size=20)
 
-  vix_data = {"MarketPrice":vix.info['regularMarketPrice'],"PreviousClose":vix.info['regularMarketPreviousClose'],"MarketOpen":vix.info['regularMarketOpen'],"DayHigh":vix.info['dayHigh'],"DayLow":vix.info['dayLow']}
+  #vix_data = {"MarketPrice":vix.info['regularMarketPrice'],"PreviousClose":vix.info['regularMarketPreviousClose'],"MarketOpen":vix.info['regularMarketOpen'],"DayHigh":vix.info['dayHigh'],"DayLow":vix.info['dayLow']}
 
-  df_vix = pd.DataFrame()
-  df_vix['Stat'] = list(vix_data.keys())
-  df_vix['Value'] = list(vix_data.values())
+  #df_vix = pd.DataFrame()
+  #df_vix['Stat'] = list(vix_data.keys())
+  #df_vix['Value'] = list(vix_data.values())
 
   f3_ax5 = fig3.add_subplot(gs[22:40,0])
 
   valuation_metric_names = ["VIX Index","Buffet Indicator","Shiller PE Ratio","Margin Debt"]
-  valuation_metric_values = [df_vix['Value'][0],'{}%'.format(buffet_ind),shiller_pe,'${:n}B'.format(list(latest_data['debt'])[-1])]
+  valuation_metric_values = [vix,'{}%'.format(buffet_ind),shiller_pe,'${:n}B'.format(list(latest_data['debt'])[-1])]
 
   x = [1.8,1.8,4.2,4.2]
   y = [24,-22,24,-22]
@@ -236,3 +237,18 @@ def dash_create(df_unemp_rate,df_gdp,df_inflation,df_rates,yield_curve,vix,index
   st.pyplot(fig3)
   
   #plt.show()
+  
+def extract_stock_info(ticker):
+  url = "https://yh-finance.p.rapidapi.com/stock/v2/get-summary"
+
+  querystring = {"symbol":ticker,"region":"US"}
+
+  headers = {
+      'x-rapidapi-host': "yh-finance.p.rapidapi.com",
+      'x-rapidapi-key': "ebcdc62e35msh8f619b00b4b0ec0p172ec1jsn7e559e27cdf2"
+      }
+      
+  response = requests.request("GET", url, headers=headers, params=querystring)
+  data = json.loads(response.text)
+
+  return data

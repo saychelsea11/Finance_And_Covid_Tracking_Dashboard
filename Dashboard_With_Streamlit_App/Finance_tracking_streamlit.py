@@ -68,9 +68,10 @@ index_change = []
 indexes = pd.DataFrame()
 
 for ticker in tickers: 
-    market_price = yf.Ticker(ticker).info['regularMarketPrice']
+    data = hp.extract_stock_info(ticker)
+    market_price = data['price']['regularMarketPrice']['raw']
     index_current.append(market_price)
-    index_change.append(((market_price - yf.Ticker(ticker).info['regularMarketOpen'])/market_price)*100)
+    index_change.append(((market_price - data['price']['regularMarketOpen']['raw'])/market_price)*100)
 
 indexes['Current'] = index_current
 indexes['Change Percent'] = index_change
@@ -200,11 +201,11 @@ print("Doses used: ",vac_values[4])
 # In[7]:
 
 
-vix = yf.Ticker("^VIX")
-
+data = hp.extract_stock_info("^VIX")
+vix = data['price']['regularMarketPrice']['raw']
 
 # get stock info
-print (vix.info['regularMarketPrice'])
+print (vix)
 
 
 # # Scraping Treasury Yield Data - YCharts
@@ -316,7 +317,19 @@ df_inflation['date'] = dates
 df_inflation['inflation_rate'] = rates  
 df_inflation['inflation_rate'] = df_inflation['inflation_rate'].str.strip()
 df_inflation['inflation_rate'] = df_inflation['inflation_rate'].replace('',np.nan)
-df_inflation['inflation_rate'] = df_inflation['inflation_rate'].apply(float)
+
+#Included additional steps to handle non-numeric inflation values
+inflation_list = []
+for rate in df_inflation['inflation_rate']: 
+    try:
+        inflation_list.append(float(rate))
+    except: 
+        inflation_list.append(float(np.nan))
+        
+df_inflation['inflation_rate'] = inflation_list
+
+#Original code for converting inflation values to float
+#df_inflation['inflation_rate'] = df_inflation['inflation_rate'].apply(float) 
 
 df_inflation.index = df_inflation['date']
 df_inflation = df_inflation.dropna()
