@@ -25,3 +25,6 @@ What we have so far!
 **12/21/21**
 - **Updated code for parsing vaccination data**: Modified text indicators for vaccination statistics as they had changed on the source website. 
 
+**1/20/22**
+- **Replaced Yahoo Finance API with Rapid API**: Now extracting indexes/indicators and VIX values using Rapid API which works on top of the Yahoo Finance API but transactions are executed much quicker.  
+
