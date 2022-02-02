@@ -26,5 +26,5 @@ What we have so far!
 - **Updated code for parsing vaccination data**: Modified text indicators for vaccination statistics as they had changed on the source website. 
 
 **1/20/22**
-- **Replaced Yahoo Finance API with Rapid API**: Now extracting indexes/indicators and VIX values using Rapid API which works on top of the Yahoo Finance API but transactions are executed much quicker.  
+- **Replaced Yahoo Finance API with Rapid API**: Now extracting indexes/indicators and VIX values using Rapid API which works on top of the Yahoo Finance API but transactions are executed much quicker. **Note: You will need to sign up to Rapid API to generate your own API key which can be inserted into the 'extract_stock_info' function in the 'helper_functions.py' module. The free option allows 500 transactions per month.**
 
