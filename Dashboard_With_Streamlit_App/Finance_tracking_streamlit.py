@@ -134,22 +134,16 @@ req = requests.get("https://www.nytimes.com/interactive/2020/us/covid-19-vaccine
 bs = BeautifulSoup(req.content)
 search = bs.find_all('td')
 
-vac_labels = {'Atleast one shot':'g-cell-color','Two shots':'g-border-r','Doses shipped':'distributed','Total shots given':'g-hide-mobile',
-              'Doses used':'g-sm'}
-              
+vac_labels = {'Atleast one shot':'pct_given_shot','Two shots (all)':'g-fully-vaccinated','Booster shot':'g-additional',
+              'Total shots given':'g-hide-mobile','Two shots (65+)':'g-bar-col'}
 vac_flag = [0,0,0,0,0]
-
-atl_one_shot = 0
-two_shots = 0
-doses_del = 0
-shots_given = 0
-doses_used = 0
+count = 0
 
 for i in search: 
   cls = i.get('class')
 
   #The class names seem to have changed on the website so had to create an alternative parsing method by looking at different keywords in the class
-  if cls[-2] == 'g-at-least-one':
+  if cls[-1] == 'pct_given_shot':
     if vac_flag[0] == 0:
         atl_one_shot = i.text
         vac_flag[0] = 1
@@ -161,35 +155,36 @@ for i in search:
         vac_flag[1] = 1
     else: 
         pass
-  if cls[-2] == 'distributed':
+  if cls[-1] == 'g-additional':
     if vac_flag[2] == 0:
-        doses_del = i.text
+        booster = i.text
         vac_flag[2] = 1
     else: 
         pass
-  if cls[-2] == 'given':
+  if cls[-2] == 'g-hide-mobile':
     if vac_flag[3] == 0:
         shots_given = i.text
         vac_flag[3] = 1
     else: 
         pass
-  if cls[-2] == 'pct_doses_given':
-    if vac_flag[4] == 0:
-        doses_used = i.text
+  if cls[-1] == 'g-bar-col':
+    count = count + 1
+    if count == 4:
+        elderly = i.text
         vac_flag[4] = 1
     else: 
         pass
   if sum(vac_flag) == 5:
     break
     
-vac_values = [atl_one_shot,two_shots,doses_del,shots_given,doses_used]
+vac_values = [atl_one_shot,two_shots,booster,shots_given,elderly]
 vac_values = list(map(str.strip,vac_values))
 
-print ("At least 1 shot given: ",vac_values[0])
-print ("Two shots given: ",vac_values[1])
-print ("Total doses delivered: ",vac_values[2])
-print("Total shots given: ",vac_values[3])
-print("Doses used: ",vac_values[4])
+print ("At least one shot: ",vac_values[0])
+print ("Two shots: ",vac_values[1])
+print ("Booster shot: ",vac_values[2])
+print("Total shots: ",vac_values[3])
+print("Two shots 65+: ",vac_values[4])
 
 
 # Note: The html text for the *class* attribute seemed to have changed on the NYT website. So the text used for parsing needed to be changed. The previous code containing the older parsing method is also shown above but commented out. 
