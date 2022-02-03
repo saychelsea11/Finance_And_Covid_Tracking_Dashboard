@@ -245,7 +245,7 @@ def extract_stock_info(ticker):
 
   headers = {
       'x-rapidapi-host': "yh-finance.p.rapidapi.com",
-      'x-rapidapi-key': "INSERT API KEY"
+      'x-rapidapi-key': "c8c32e16cdmsh40250af4d5c9cb6p17932cjsna77272b10ac1"
       }
       
   response = requests.request("GET", url, headers=headers, params=querystring)
