@@ -29,34 +29,32 @@ def extract_treasury_rates(url):
     df_30yr = []
     count = 0
 
-    cols = search[1].find_all('th')
-
-    data = search[1].find_all('td')
+    data = search[0].find_all('td')
 
     for j in data:
         count = count + 1
         if count == 1:
             df_date.append(j.text)
-        elif count == 2:
-            df_1mo.append(float(j.text))
-        elif count == 4: 
-            df_3mo.append(float(j.text))
-        elif count == 5: 
-            df_6mo.append(float(j.text))
-        elif count == 6: 
-            df_1yr.append(float(j.text))
-        elif count == 8: 
-            df_3yr.append(float(j.text))
-        elif count == 9: 
-            df_5yr.append(float(j.text))
+        elif count == 9:
+            df_1mo.append(float(j.text.strip()))
         elif count == 11: 
-            df_10yr.append(float(j.text))
+            df_3mo.append(float(j.text.strip()))
         elif count == 12: 
-            df_20yr.append(float(j.text))
+            df_6mo.append(float(j.text.strip()))
         elif count == 13: 
-            df_30yr.append(float(j.text))
+            df_1yr.append(float(j.text.strip()))
+        elif count == 15: 
+            df_3yr.append(float(j.text.strip()))
+        elif count == 16: 
+            df_5yr.append(float(j.text.strip()))
+        elif count == 18: 
+            df_10yr.append(float(j.text.strip()))
+        elif count == 19: 
+            df_20yr.append(float(j.text.strip()))
+        elif count == 20: 
+            df_30yr.append(float(j.text.strip()))
             count = 0
-        
+
     df_rates = pd.DataFrame()
     df_rates['1mo'] = df_1mo
     df_rates['3mo'] = df_3mo
@@ -71,6 +69,7 @@ def extract_treasury_rates(url):
     df_rates['Date'] = df_date
 
     df_rates.index = df_rates['Date'].apply(pd.to_datetime)
+    df_rates = df_rates.drop('Date',axis=1)
 
     return df_rates
 
