@@ -211,7 +211,7 @@ print (vix)
 # In[8]:
 
 
-df_rates = hp.extract_treasury_rates('https://www.treasury.gov/resource-center/data-chart-center/interest-rates/pages/textview.aspx?data=yield')
+df_rates = hp.extract_treasury_rates('https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202203')
 
 print (df_rates.head())
 
