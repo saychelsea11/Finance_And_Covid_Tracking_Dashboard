@@ -32,4 +32,4 @@ What we have so far!
 - **Added booster shot data**: Added booster shot information part of the vaccination section. Removed total shots delivered information. 
 
 **3/5/22**
-- **Updated treasury rates URL**: Added the new URL for extracting the treasury rates. Made some minor changes to the code to adjust to the new XML format for the rates table. 
+- **Updated treasury rates URL**: Added a new URL for extracting the treasury rates as the web data was moved to a new location. Made some minor changes to the code to adjust to the new XML format for the rates table. 
