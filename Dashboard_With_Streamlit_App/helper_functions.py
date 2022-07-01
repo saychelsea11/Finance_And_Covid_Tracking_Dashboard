@@ -17,10 +17,11 @@ def extract_stock_info(ticker):
     querystring = {"Symbol":ticker}
 
     headers = {
-        "X-RapidAPI-Key": "YOUR API KEY",
+        "X-RapidAPI-Key": "8df34c6c9fmshfbc86def7a396a8p11651djsna938a4c6a21a",
         "X-RapidAPI-Host": "yahoofinance-stocks1.p.rapidapi.com"
     }
-
+    
+    #Retrieving the stock data and converting to JSON format
     response = requests.request("GET", url, headers=headers, params=querystring)
     data = json.loads(response.text)
 
@@ -30,13 +31,17 @@ def retrieve_indexes_and_assets(indexes,tickers):
     index_current = []
     index_change = []
     df_index = pd.DataFrame()
-
+    
+    #Calling the extract_stock_info function for retrieving stock data
+    #Extracting the open price, close price and then calculating the change percentage. The data is then stored in a dataframe. 
     for ticker in tickers: 
         data = extract_stock_info(ticker)
         market_price = data['result']['regularMarketPrice']
         market_price_open = data['result']['regularMarketOpen']
         index_current.append(market_price)
         index_change.append(((market_price - market_price_open)/market_price)*100)
+        
+        #Added 1.1sec of wait time between each API transaction due to the limit set by the source website
         time.sleep(1.1)
 
     df_index['Current Price'] = index_current
