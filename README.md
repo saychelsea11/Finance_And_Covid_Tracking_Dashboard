@@ -35,5 +35,5 @@ What we have so far!
 - **Updated treasury rates URL**: Added a new URL for extracting the treasury rates as the web data was moved to a new location. Made some minor changes to the code to adjust to the new XML format for the rates table. 
 
 **7/1/22**
-- **Added new API for extracting stock/index info**: Replaced the older Rapid API with a new *YahooFinance Stocks* API. Note that any users will need to create their own personal API Key in order to use the API functionality within this code. The key for the API can be created on the Rapid API website. 
+- **Added new API for extracting stock/index info**: Replaced the older Rapid API with a new *YahooFinance Stocks* API. Users will need to create their own personal API Key in order to use the API functionality within this code. The key for the API can be created on the Rapid API website. 
 - **Reduced the code for extracting indexes**: Converted the code into a function which is placed inside the helper function. 
