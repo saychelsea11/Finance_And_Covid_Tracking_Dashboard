@@ -9,6 +9,41 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import date, datetime
 import json
+import time
+
+def extract_stock_info(ticker):
+    url = "https://yahoofinance-stocks1.p.rapidapi.com/stock-metadata"
+
+    querystring = {"Symbol":ticker}
+
+    headers = {
+        "X-RapidAPI-Key": "YOUR API KEY",
+        "X-RapidAPI-Host": "yahoofinance-stocks1.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    data = json.loads(response.text)
+
+    return data
+
+def retrieve_indexes_and_assets(indexes,tickers):
+    index_current = []
+    index_change = []
+    df_index = pd.DataFrame()
+
+    for ticker in tickers: 
+        data = extract_stock_info(ticker)
+        market_price = data['result']['regularMarketPrice']
+        market_price_open = data['result']['regularMarketOpen']
+        index_current.append(market_price)
+        index_change.append(((market_price - market_price_open)/market_price)*100)
+        time.sleep(1.1)
+
+    df_index['Current Price'] = index_current
+    df_index['Change Percent'] = index_change
+    df_index['Index'] = indexes
+    
+    return (df_index)
   
 def extract_treasury_rates(url):
     req = requests.get(url)
@@ -238,19 +273,5 @@ def dash_create(df_unemp_rate,df_gdp,df_inflation,df_rates,yield_curve,vix,index
   plt.tight_layout(pad=4)
   
   plt.show()
-  
-def extract_stock_info(ticker):
-  url = "https://yh-finance.p.rapidapi.com/stock/v2/get-summary"
-
-  querystring = {"symbol":ticker,"region":"US"}
-
-  headers = {
-      'x-rapidapi-host': "yh-finance.p.rapidapi.com",
-      'x-rapidapi-key': "c8c32e16cdmsh40250af4d5c9cb6p17932cjsna77272b10ac1"
-      }
-      
-  response = requests.request("GET", url, headers=headers, params=querystring)
-  data = json.loads(response.text)
-
-  return data
+ 
   
