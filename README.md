@@ -6,7 +6,9 @@ What we have so far!
 
 ### Requirements
 
-- In order to use the *extract_stock_info()* function in the *helper_functions.py* module, you will need to include your own API KEY for the *YahooFinance Stocks* API. To create an API KEY and for more information regarding the service, go to this [link](https://rapidapi.com/integraatio/api/yahoofinance-stocks1/). 
+- In order to use the *extract_stock_info()* function in the *helper_functions.py* module, you will need to include your own API KEY for the **YahooFinance Stocks** API. To create an API KEY and for more information regarding the service, go to this [link](https://rapidapi.com/integraatio/api/yahoofinance-stocks1/). 
+
+![image](https://user-images.githubusercontent.com/31114603/181051317-a3d6b47b-dc97-40b6-8eaf-48f0d766ee45.png)
 
 ### Code modifications: 
 **3/13/21**
