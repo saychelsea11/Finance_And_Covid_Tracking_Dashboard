@@ -4,6 +4,10 @@ What we have so far!
 
 ![image](https://user-images.githubusercontent.com/31114603/141147778-2866edd6-02a5-466c-8985-8b10a5a24e84.png)
 
+### Requirements
+
+- In order to use the *extract_stock_info()* function in the *helper_functions.py* module, you will need to include your own API KEY for the *YahooFinance Stocks* API. To create an API KEY and for more information regarding the service, go to this [link](https://rapidapi.com/integraatio/api/yahoofinance-stocks1/). 
+
 ### Code modifications: 
 **3/13/21**
 - **Yahoo Finance Indexes**: In the code, "bs.find("script",text=re.compile("root.App.main")).text" seemed to return an empty string for some users which could be an issue with the Python or BeautifulSoup version. A fix for this was to use the *str()* function instead of *.text*.
