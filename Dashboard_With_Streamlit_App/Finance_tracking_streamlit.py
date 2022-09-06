@@ -233,6 +233,19 @@ df_debt, latest_data = hp.extract_debt_margin(url)
 print ("Latest Margin Debt Data: ",list(latest_data['date'])[-1], ", $" + str(list(latest_data['debt'])[-1]*1000000))
 
 print (df_debt.head())
+print ()
+
+url = 'https://www.freddiemac.com/pmms/pmms15'
+df_mortgage_15yr = hp.extract_mortgage_rates(url)
+
+print (df_mortgage_15yr.head())
+print ()
+
+url = 'https://www.freddiemac.com/pmms/pmms30'
+df_mortgage_30yr = hp.extract_mortgage_rates(url)
+
+print (df_mortgage_30yr.head())
+print ()
 
 
 # # Dashboard
@@ -243,7 +256,7 @@ print (df_debt.head())
 
 
 hp.dash_create(df_unemp_rate,df_gdp,df_inflation,df_rates,yield_curve,vix,df_index,cases,vac_values,vac_labels,buffet_ind,
-              shiller_pe,df_debt,latest_data)
+              shiller_pe,df_debt,latest_data,df_mortgage_15yr,df_mortgage_30yr)
 
 
 # In[ ]:
