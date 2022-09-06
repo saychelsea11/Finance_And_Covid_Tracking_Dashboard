@@ -17,7 +17,7 @@ def extract_stock_info(ticker):
     querystring = {"Symbol":ticker}
 
     headers = {
-        "X-RapidAPI-Key": "YOUR API KEY",
+        "X-RapidAPI-Key": "8df34c6c9fmshfbc86def7a396a8p11651djsna938a4c6a21a",
         "X-RapidAPI-Host": "yahoofinance-stocks1.p.rapidapi.com"
     }
     
@@ -288,10 +288,6 @@ def extract_inflation_rate(url):
             inflation_list.append(float(np.nan))
             
     df_inflation['inflation_rate'] = inflation_list
-
-    #Original code for converting inflation values to float
-    #df_inflation['inflation_rate'] = df_inflation['inflation_rate'].apply(float) 
-
     df_inflation.index = df_inflation['date']
     df_inflation = df_inflation.dropna()
     
@@ -372,10 +368,68 @@ def extract_debt_margin(url):
     latest_data = df_debt[df_debt['date'].str.contains(r'-21')]
     
     return df_debt, latest_data
+    
+def extract_mortgage_rates(url):
+    req = requests.get(url)
+    bs = BeautifulSoup(req.content,'lxml')
+
+    tr_tags = bs.find_all('tr')[:45]
+
+    month_list = ['January','February','March','April','May','June','July','August','September','October','November','December']
+    year = []
+    current_years = []
+    month = []
+    mort_rate = []
+    count = 0 #Current years count
+    count2 = 0 #Count to cycle through rates and points
+    count3 = 0 
+    df_mortgage = pd.DataFrame()
+
+    for i in tr_tags:
+        #Find years
+        th_tags = i.find_all('th')
+        for j in th_tags: 
+            if j.get('colspan') == '2':
+                if count == 5: 
+                    current_years = []
+                    current_years.append(j.text)
+                    count = 0
+                    count = count + 1
+                else: 
+                    current_years.append(j.text)
+                    count = count + 1
+            #print ("Current years:",current_years)
+            #Findings months
+            if j.text in month_list: 
+                #print ("yes")
+                td_tags = i.find_all('td')
+                #Finding rates
+                for rate in td_tags: 
+                    if (count2%2) == 0:
+                        month.append(j.text)
+                        mort_rate.append(rate.text)
+                        #print (current_years)
+                        #print (count3)
+                        #print (current_years[count3])
+                        year.append(current_years[count3])
+                        count3 = count3 + 1
+                    count2 = count2 + 1
+                count3 = 0
+                                    
+    df_mortgage['rate'] = mort_rate
+    df_mortgage['month'] = month
+    df_mortgage['year'] = year
+    df_mortgage['date'] = df_mortgage.apply(lambda x: pd.to_datetime(x[1] + '-' + x[2]),axis=1)
+    df_mortgage = df_mortgage.sort_values('date')
+    df_mortgage.index = df_mortgage['date']
+    df_mortgage['rate'] = df_mortgage['rate'].replace('\xa0',np.nan)
+    df_mortgage['rate'] = df_mortgage['rate'].map(float)
+    
+    return df_mortgage
 
 # Commented out IPython magic to ensure Python compatibility.
 def dash_create(df_unemp_rate,df_gdp,df_inflation,df_rates,yield_curve,vix,indexes,cases,vac_values,vac_labels,buffet_ind,
-              shiller_pe,df_debt,latest_data):
+              shiller_pe,df_debt,latest_data,df_mortgage_15yr,df_mortgage_30yr):
   plt.rcParams.update(plt.rcParamsDefault)
 #   %matplotlib inline
   plt.style.use('bmh')
@@ -386,7 +440,9 @@ def dash_create(df_unemp_rate,df_gdp,df_inflation,df_rates,yield_curve,vix,index
   f3_ax1 = fig3.add_subplot(gs[0:10,0])
   #plt.subplot(2,3,1)
   plt.plot(df_unemp_rate['unemployment_rate_percent'],alpha=0.8,label='Unemployment rate (%)',color='green')
-  plt.plot(df_inflation.iloc[df_inflation.index>'2011']['inflation_rate'],alpha=0.8,label='Inflation rate (%)',color='blue')
+  plt.plot(df_inflation.iloc[df_inflation.index>'2008']['inflation_rate'],alpha=0.8,label='Inflation rate (%)',color='blue')
+  plt.plot(df_mortgage_30yr['rate'],label='30-year fixed-rate mortgage (%)',alpha=0.8,color='orange')
+  plt.plot(df_mortgage_15yr['rate'],label='15-year fixed-rate mortgage (%)',alpha=0.8,color='red')
   plt.xticks(rotation=0,size=20)
   plt.xlabel('Timeline',size=25)
   plt.yticks(size=20)
